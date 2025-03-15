@@ -1,0 +1,6 @@
+﻿services:
+  kddice.game.api:
+    image: kddice.game.api
+    build:
+      context: .
+      dockerfile: KdDice.Game.Api/Dockerfile

@@ -1,0 +1,22 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kd-dice-game-deployment
+  labels:
+    app: kd-dice-game-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kd-dice-game-api
+  template:
+    metadata:
+      labels:
+        app: kd-dice-game-api
+    spec:
+      containers:
+        - name: kd-dice-game-api
+          image: yfozekosh/kddice.game.api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
