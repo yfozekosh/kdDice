@@ -1,15 +1,18 @@
-using KdDice.Game.Api.Api;
+using KdDice.Game.Api.Modules;
+using KdDice.Game.Api.Modules.Square;
 
-internal class Program
+namespace KdDice.Game.Api;
+
+internal static class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.AddQueue();
 
         var app = builder.Build();
 
@@ -22,7 +25,8 @@ internal class Program
 
         app.UseHttpsRedirection();
 
-        app.AddApiEndpoints();
+        app.UseSquareModule();
+
         app.Run();
     }
 }
