@@ -10,6 +10,7 @@
     <ItemGroup>
         <PackageReference Include="MassTransit.Platform.Abstractions" Version="7.2.4" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.13"/>
+        <PackageReference Include="MongoDB.Driver" Version="3.2.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
@@ -21,6 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\KdDice.Game.Model\KdDice.Game.Model.csproj" />
+      <ProjectReference Include="..\KdDice.Persistence\KdDice.Persistence.csproj" />
       <ProjectReference Include="..\KdDice.Queue\KdDice.Queue.csproj" />
     </ItemGroup>
 

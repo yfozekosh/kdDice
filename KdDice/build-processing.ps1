@@ -1,0 +1,1 @@
+docker build -t kddice.processing -f .\KdDice.Processing\Dockerfile .

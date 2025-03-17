@@ -1,6 +1,7 @@
-﻿using KdDice.Game.Api.Modules.Square.Messages;
+﻿using KdDice.Game.Model;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using KdDice.Game.Model.Square.Messages;
 
 namespace KdDice.Game.Api.Modules.Square;
 
@@ -12,8 +13,12 @@ public static class SquareApi
                 "/v1/square/{number:int}",
                 async ([FromRoute] int number, [FromServices] IPublishEndpoint publishEndpoint) =>
                 {
-                    var squareRequestMessage = new SquareRequestMessage(number);
+                    var squareRequestMessage = new SquareRequestMessage(number, VersionInfo.Instance)
+                    {
+                        RequestId = Guid.NewGuid()
+                    };
                     await publishEndpoint.Publish(squareRequestMessage);
+
                     return Results.Ok(new
                     {
                         Response = "Request has been created",

@@ -8,19 +8,48 @@
       - "8080:80"
     depends_on:
       - rabbitmq
-    environment:
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - RabbitMQ__Host=rabbitmq
-      - RabbitMQ__Username=guest
-      - RabbitMQ__Password=guest
-      - ASPNETCORE_URLS=http://+:80
+    env_file:
+      - envs/local.env
     restart: always
+
+  kddice.processing:
+    image: kddice.processing
+    build:
+      context: .
+      dockerfile: KdDice.Processing/Dockerfile
+    depends_on:
+      - rabbitmq
+      - mongodb
+    env_file:
+      - envs/local.env
+    restart: always
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
+    env_file:
+      - envs/local.env
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    env_file:
+      - envs/local.env
+    restart: always
+
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - "27018:8081"
+    depends_on:
+      - mongodb
+    env_file:
+      - envs/local.env
+    restart: always
 
 networks:
   default:
