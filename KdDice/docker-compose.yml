@@ -5,7 +5,7 @@
       context: .
       dockerfile: KdDice.Game.Api/Dockerfile
     ports:
-      - "8080:80"
+      - "127.0.0.1:80:80"
     depends_on:
       - rabbitmq
     env_file:
@@ -26,19 +26,22 @@
 
   rabbitmq:
     image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
     env_file:
       - envs/local.env
     restart: always
 
   mongodb:
-    image: mongo:latest
+    image: mongo
     ports:
       - "27017:27017"
     env_file:
       - envs/local.env
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb_data:/data/db
     restart: always
 
   mongo-express:
@@ -54,3 +57,6 @@
 networks:
   default:
     name: kddice_network
+
+volumes:
+  mongodb_data:
